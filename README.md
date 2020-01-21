@@ -1,6 +1,6 @@
 # Github Pages Template for IPython Notebooks
 
-This repo contains an adaptation of the [minima theme](https://jekyll.github.io/minima/) for IPython notebooks.
+This repo contains an adaptation of the [minima theme](https://jekyll.github.io/minima/) that styles IPython notebooks beautifully.
 
 **Includes**
 
@@ -79,7 +79,17 @@ To customize html...
 
 *Note: The html files use Liquid*
 
-# Future TODOs
+# Notes for me
+
+Consider keeping fork up to date occasionally
+```bash
+git clone
+git remote add upstream https://github.com/jekyll/minima.git
+git remote -v
+# see whats updated, merge (pull, fetch/merge, rebase)
+```
+
+Future Feature Additions / TODOs
 
 * Harden python conversion script
 
