@@ -1,50 +1,65 @@
 # Github Pages Template for IPython Notebooks
 
-This repo contains an adaptation of the [minima theme](https://jekyll.github.io/minima/) that styles IPython notebooks beautifully.
+This repo contains an adaptation of the [minima theme](https://jekyll.github.io/minima/) that styles IPython notebooks beautifully in GitHub pages.
 
-**Includes**
+GitHub Pages uses [Jekyll](https://jekyllrb.com/) as a static site generator. Checkout the [Github Pages Documentation](https://pages.github.com/) for more info.
 
-* Custom styles (`_sass/custom.css`) for displaying .ipynb's beautifully
+**Modificatons from Jekyll Minima**
 
-* Custom scripts (`tools/convert_ipynbs.py`) for converting your Jupyter Notebooks (ipython specifically) for github pages
+* `_sass/custom.scss`: Custom styles for displaying .ipynb's beautifully
 
-## Structure
+* `_layout/notebook.html`: A custom layout for notebooks
 
-Github Pages uses [Jekyll](https://jekyllrb.com/) as a static site generator. Checkout the [Github Pages Documentation](https://pages.github.com/) for more info.
+* `_includes/head.html`: Slight modification of minima's `head.html` file to display favicons properly.
 
-*Note: This repo uses `theme: minima` (see `_config.yml`) with certain customizations that override the default theme by being defined explicitly in `_layouts`, `_notebooks`, `_sass`, `assets`, etc. To override any of minima's defaults, just define them explicitly in your sites repo and it will overwrite the default.*
+* `_notebooks`: folder that contains notebook collections in Jekyll readable format like markdown or html (including `layout: notebook` in front matter)
 
-**Repo Structure**
+# Usage Instructions
 
-* `notebooks/`: contains contains your ipynb notebooks; here you edit your notebooks just like normal
+You have two options for using this theme. Pick the option that best suits you...
 
-* `tools/`: contains tools for ipynb conversion; here you will run a python script (`convert_ipynbs.py`) to build your site using the notebooks in your `notebooks/` folder above
+## Option 1: I already have my .ipynb files in a jekyll compatible format (html, css) and just want your theme
+
+If this is the case, all you need to do is
+
+* **Enable GitHub Pages:** from your repository go to Settings --> GitHub Pages --> enable GitHub pages on the `master branch` or `master branch /docs` folder
+
+* **Add Remote Theme:** In your `_config.yml`, add this `remote-theme: nancynobody/minima-ipynb`
+
+* **Add your notebooks in html or md format:** Now just put your notebook html or markdown files in a `_notebooks` folder at the root of your GitHub pages site and add an `index.html` or `index.md` and whatever other things you want to your site.
+
+Yay! Now you have Jekyll Minima with customizations for displaying ipython nbs [as shown here](https://nancynobody.github.io/minima-ipynb/).
+
+## Option 2: I just have my .ipynb notebooks in a repo and want to generate the static site directly from those 
+
+So you don't want to convert your .ipynb files to markdown or html manually!? Go figure...I don't blame you. I didn't either.
+
+The following are repos containing notebooks and a GitHub pages site that is displaying them.
+
+* https://github.com/nancynobody/python3_fluency
+
+* https://github.com/nancynobody/data_science_mastery
+
+Your repo will have the following structure when we are done.
+
+* `notebooks/`: contains contains your .ipynb notebooks; here you edit your notebooks just like normal
+
+* `tools_ipynb_to_jekyll/`: contains script tools to convert the .ipynb files in your `notebooks` folder to jekyll compatible so GitHub can display your site.
 
 * `docs/`: folder that contains all site configs
 
 * `docs/_config.yml`: contains site configurations (eg. theme, site title, etc); update site title, description, etc here
 
-* `docs/_layouts/`: contains the `home.html` and `notebook.html` layout configurations; change layout defaults for home or notebooks here using [Liquid](https://jekyllrb.com/docs/liquid/).
+* `docs/_notebooks/`: contains the notebooks that have been converted using the `tools_ipynb_to_jekyll.py` script; they contain front matter, site info and notebook content
 
-* `docs/_notebooks/`: contains the notebooks that have been converted using the python script (`tools/convert_ipynbs.py`); they contain front matter, site info and notebook content that was compiled using the `convert_ipynbs.py` script in `tools/`
+*Note: Just like any Jekyll theme you can override defaults (like `_sass`, `_layouts`, etc) as desired.*
 
-* `docs/_sass/`: contains `custom.scss` style for displaying ipynbs; update the `custom.scss` file to add custom styles
+## Step 1: Setup GitHub Pages
 
-* `docs/assets/`: contains default and custom style imports
+### Create a `docs` folder
+This will be the root folder for your site
 
-* `docs/images/`: contains site images; including images from your notebooks that were placed here by the `convert_ipynbs.py` script
-
-* `docs/pages/`: contains site pages that are not notebooks (eg. about, portfolio, etc); to add/remove pages do it here.
-
-# Usage
-
-The following steps will help you setup your repo so you have a folder structure like this repo with folders: `notebooks/`, `tools/`, and `docs/`
-
-## Step 1: Get the site configs/styles and build tools
-
-* Manually add the `docs/` and `tools/` folders + their contents to the current repo you have your notebooks in; and make sure your notebooks are placed into a notebooks folder.
-
-## Step 2: Enable Github.io Pages on your site
+### Enable GitHub Pages
 
 * Enable github pages [as described here](https://guides.github.com/features/pages/)
 
@@ -52,51 +67,36 @@ The following steps will help you setup your repo so you have a folder structure
 
 :exclamation: Don't chose a theme using the Github GUI! The minima theme is already in the `docs/_config.yml` repo already!
 
-## Step 3: Build site, git add, commit, push
+## Step 2: Grab the Convert Tools
 
-Now you can git add, commit, push to keep your notebooks folder up to date just like you normally would. But when you want to rebuild your site (that is, update all current notebooks on the site using your `notebooks` folder) just run the python script in tools, then git add, commit, push.
+From inside your repo add the tools as a git submodule
+
+```bash
+git submodule add https://github.com/nancynobody/tools_ipynb_to_jekyll.git
+```
+
+*Note: You can also just download the toolset or grab them in any other way you see fit. I just like the submodule method in this case.*
+
+## That's it!
+
+**Updating, adding removing notebooks:** Now you can git add, commit, push to keep your notebooks folder up to date just like you normally would. 
+
+**Building your Site:** When you want to rebuild your site (that is, update all current notebooks on the site using your `notebooks` folder) just run the python script in tools, then git add, commit, push.
 
 **Build Site (based on current `notebooks/`)**
 ```bash
 cd tools
 python convert_ipynbs.py
+
 ```
-
-**Push changes to github + pages**
-```bash
-git add .
-git commit -m "build site after 3 notebook updates"
-git push
-```
-
-## Site Customizations
-
-TODO: FILL THIS SECTION IN
-
-Explain how to add google analytics and disqus
-To customize styles
-To customize html...
-
-*Note: The html files use Liquid*
 
 # Notes for me
 
 Consider keeping fork up to date occasionally
+
 ```bash
 git clone
 git remote add upstream https://github.com/jekyll/minima.git
 git remote -v
 # see whats updated, merge (pull, fetch/merge, rebase)
 ```
-
-Future Feature Additions / TODOs
-
-* Harden python conversion script
-
-* Fix social icons in footer...apparently they aren't displaying on the site
-
-* Write a gem so you don't have to run the python script
-
-* Make an official theme so you don't have to copy the folders but can just use github pages new `remote_theme` config option in `_config.yml`
-
-* Ugh
